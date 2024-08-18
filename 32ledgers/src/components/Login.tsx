@@ -1,11 +1,15 @@
 // src/components/Login.tsx
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -17,11 +21,8 @@ const Login: React.FC = () => {
 
     setError(null);
 
-    if (email === 'user@example.com' && password === 'password') {
-      alert('Login successful');
-    } else {
-      setError('Invalid email or password');
-    }
+      login(email, password);
+      navigate('/dashboard');
   };
 
   return (
@@ -33,7 +34,7 @@ const Login: React.FC = () => {
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input
-              type="email"
+              type="text"
               className="form-control"
               id="email"
               placeholder="Enter email"
