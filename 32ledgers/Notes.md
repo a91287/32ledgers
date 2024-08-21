@@ -27,6 +27,11 @@ docker push <CONTAINER_REGISTRY_URL>/<USERNAME>/<IMAGE_NAME>:<TAG>
 docker run -p <CONTAINER_PORT>:<HOST_PORT> <CONTAINER_REGISTRY_ADDR/USERNAME/IMAGE_NAME>
 ```
 
+## Remove all docker images
+```
+docker rmi $(docker images -q)
+```
+
 ## NPM
 
 ### Create a React typescript project
