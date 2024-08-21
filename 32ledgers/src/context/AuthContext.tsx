@@ -12,12 +12,30 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
-  const login = (username: string, password: string) => {
-    // Simulate authentication process
-    if (username === 'user' && password === 'password') {
-      setIsAuthenticated(true);
-    } else {
-      alert('Invalid credentials');
+  const login = async (username: string, password: string) => {
+    try {
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.message === 'Login successful') {
+          setIsAuthenticated(true);
+          console.log('Logged in successfully');
+        } else {
+          alert('Invalid credentials');
+        }
+      } else {
+        alert('Failed to log in');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred during login');
     }
   };
 
