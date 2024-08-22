@@ -19,7 +19,7 @@ services:
       - "8080:8080"     # Traefik dashboard
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "./logs:/logs"  # Mount the logs directory
+      #- "./logs:/logs"  # Mount the logs directory
     networks:
       - frontend-net
 
