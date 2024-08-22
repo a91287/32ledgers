@@ -53,6 +53,14 @@ services:
       - "traefik.http.routers.ms_user_access_control.middlewares=ms_user_access_control-rewrite"
       - "traefik.http.services.ms_user_access_control.loadbalancer.server.port=5000"
 
+  redis:
+    image: redis:7.0-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - frontend-net
+    command: ["redis-server", "--appendonly", "yes"]  # Enable persistence
 
 
 networks:
