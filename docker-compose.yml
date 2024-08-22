@@ -61,7 +61,23 @@ services:
       - frontend-net
     command: ["redis-server", "--appendonly", "yes"]  # Enable persistence
 
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydatabase
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - frontend-net
 
 networks:
   frontend-net:
     driver: bridge
+
+volumes:
+  postgres_data:
