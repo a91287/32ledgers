@@ -1,20 +1,6 @@
 version: '3.9'
 
 services:
-  frontend:
-    image: ghcr.io/a91287/32ledgers-gui:dev
-    container_name: 32ledgers-frontend
-    ports:
-      - "8081:80"
-    networks:
-      - frontend-net
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.frontend.rule=PathPrefix(`/`)"
-      - "traefik.http.routers.frontend.priority=1"  # Lower priority
-      - "traefik.http.routers.frontend.entrypoints=web"
-      - "traefik.http.services.frontend.loadbalancer.server.port=80"
-
 
   traefik:
     image: "traefik:v3.1.2"
@@ -37,6 +23,19 @@ services:
     networks:
       - frontend-net
 
+  frontend:
+    image: ghcr.io/a91287/32ledgers-gui:dev
+    container_name: 32ledgers-frontend
+    ports:
+      - "8081:80"
+    networks:
+      - frontend-net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.frontend.priority=1"  # Lower priority
+      - "traefik.http.routers.frontend.entrypoints=web"
+      - "traefik.http.services.frontend.loadbalancer.server.port=80"
   
   ms_user_access_control:
     image: ghcr.io/a91287/ms_user_access_control:dev
